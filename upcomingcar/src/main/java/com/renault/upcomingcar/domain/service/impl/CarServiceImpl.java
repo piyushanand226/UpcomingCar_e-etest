@@ -11,24 +11,30 @@ import com.renault.upcomingcar.domain.service.CarService;
 @Service
 public class CarServiceImpl implements CarService {
 
-    private final CarRepository carRepo;
+	
+	 private final CarRepository carRepo;
 
-    public CarServiceImpl(CarRepository carRepo) {
-        this.carRepo = carRepo;
-    }
+	    public CarServiceImpl(CarRepository carRepo) {
+	        this.carRepo = carRepo;
+	    }
 
-    @Override
-    public List<Car> findAllCars() {
-        return carRepo.findAll();
-    }
+	    @Override
+	    public List<Car> findAllCars() {
+	        return carRepo.findAll();
+	    }
 
-    @Override
-    public Car saveCar(Car car) {
-        return carRepo.save(car);
-    }
+	    @Override
+	    public Car saveCar(Car car) {
+	        return carRepo.save(car);
+	    }
 
-    @Override
-    public void deleteCarById(Integer id) {
-        carRepo.deleteById(id);
-    }
+	    @Override
+	    public void deleteCarById(Integer id) {
+	        carRepo.deleteById(id.longValue());
+	    }
+
+
+
+
+   
 }
