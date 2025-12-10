@@ -11,5 +11,4 @@ class JwtUtilTest {
         org.junit.jupiter.api.Assertions.assertNotNull(token);
         org.junit.jupiter.api.Assertions.assertTrue(jwtUtil.validateToken(token, ud));
     }
-    
 }

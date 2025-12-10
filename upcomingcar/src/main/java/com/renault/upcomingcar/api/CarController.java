@@ -1,4 +1,4 @@
-package com.renault.upcomingcar.api.controller;
+package com.renault.upcomingcar.api;
 
 import java.util.List;
 

@@ -1,7 +1,0 @@
-
-package com.renault.upcomingcar.api.dto;
-
-import jakarta.validation.constraints.NotBlank;
-
-public record AuthRequest(@NotBlank String username, @NotBlank String password) {}
-public record AuthResponse(String token) {}

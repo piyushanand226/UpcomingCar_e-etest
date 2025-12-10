@@ -31,11 +31,11 @@ public class JwtAuthenticationController {
     @PostMapping
     public ResponseEntity<AuthResponse> authenticate(@Valid @RequestBody AuthRequest request) {
         var authToken = new UsernamePasswordAuthenticationToken(
-            request.username(), request.password());
+            request.getUsername(), request.getPassword());
 
         authenticationManager.authenticate(authToken);
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.username());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         String jwt = jwtUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthResponse(jwt));
     }

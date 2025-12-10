@@ -1,4 +1,4 @@
-package com.renault.UpcomingCar.config;
+package com.renault.upcomingcar.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
-import com.renault.UpcomingCar.service.CustomUserDetailsService;
+
 
 @Configuration
 @EnableMethodSecurity
