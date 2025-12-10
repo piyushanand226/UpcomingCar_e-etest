@@ -1,3 +1,9 @@
+mvn spring-boot:run -Pdev
+mvn test -Ptest
+mvn spring-boot:run -
+
+
+
 server:
   port: 8091
 
@@ -31,6 +37,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    defer-datasource-initialization: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
@@ -50,6 +57,7 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: false
+    defer-datasource-initialization: true
     properties:
       hibernate:
-       
+        dialect: org.hibernate.dialect.H2Dialect
