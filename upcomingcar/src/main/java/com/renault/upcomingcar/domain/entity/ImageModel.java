@@ -2,41 +2,44 @@ package com.renault.upcomingcar.domain.entity;
 
 
 
-import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Data
 @Entity
-@Table(name = "image_table")
-public class ImageModel implements java.io.Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    public ImageModel() {}
-
-    public ImageModel(String imageName, String type, byte[] picByte) {
-        this.imageName = imageName;
-        this.type = type;
-        this.picByte = picByte;
-    }
+@Table(name = "images")
+@ToString
+@Setter
+@Getter
+public class ImageModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_Id")
     private Integer imageId;
 
-    @Column(name = "image_Name")
-    private String imageName;
-
-    @Column(name = "type")
-    private String type;
-
     @Lob
-    @Column(name = "picByte")
-    private byte[] picByte;
+    @Column(name = "image_data", columnDefinition = "BLOB")
+    private byte[] imageData;
 
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "imageModel", cascade = CascadeType.PERSIST)
+    @Column(name = "file_name")
+    private String fileName;
+
+    @Column(name = "file_type")
+    private String fileType;
+
+    // Bidirectional link back to Car
+    @OneToOne(mappedBy = "imagemodel", fetch = FetchType.LAZY)
     private Car car;
 }

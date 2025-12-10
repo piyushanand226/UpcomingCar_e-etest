@@ -1,34 +1,33 @@
 package com.renault.upcomingcar.domain.entity;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import java.util.Set;
 
+@Data
 @Entity
-@Table(name = "users")
+@Table(name = "users1")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_Id", nullable = false)
     private Integer userId;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false)
-    private String password; // stored as BCrypt hash
+    @Column(name = "password", nullable = false)
+    private String password;
 
-    @Column(nullable = false)
-    private String userRole; // "USER" or "ADMIN"
+    @Column(name = "user_role")
+    private String userRole;
 
-    // Getters and setters
-    public Integer getUserId() { return userId; }
-    public void setUserId(Integer userId) { this.userId = userId; }
-
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
-
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
-
-    public String getUserRole() { return userRole; }
-    public void setUserRole(String userRole) { this.userRole = userRole; }
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Car> cars;
 }

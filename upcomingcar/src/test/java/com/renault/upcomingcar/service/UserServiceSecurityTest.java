@@ -1,36 +1,58 @@
 package com.renault.upcomingcar.service;
 
-import org.junit.Test;
+import com.renault.upcomingcar.domain.entity.User;
+import com.renault.upcomingcar.domain.repository.UserRepository;
+import com.renault.upcomingcar.domain.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@ActiveProfiles("test")   // ✅ ensures H2 + test profile is used
 class UserServiceSecurityTest {
-    @Autowired private com.renault.upcomingcar.domain.service.UserService userService;
-    @Autowired private com.renault.upcomingcar.domain.repository.UserRepository userRepository;
-    @Autowired private org.springframework.security.crypto.password.PasswordEncoder encoder;
+
+    @Autowired private UserService userService;
+    @Autowired private UserRepository userRepository;
+    @Autowired private PasswordEncoder encoder;
 
     @BeforeEach
     void seed() {
         userRepository.deleteAll();
-        var user = new com.renault.upcomingcar.domain.entity.User();
-        user.setUsername("piyush"); user.setPassword(encoder.encode("plainPassword")); user.setUserRole("USER"); userRepository.save(user);
-        var admin = new com.renault.upcomingcar.domain.entity.User();
-        admin.setUsername("admin"); admin.setPassword(encoder.encode("adminPassword")); admin.setUserRole("ADMIN"); userRepository.save(admin);
+
+        var user = new User();
+        user.setUsername("piyush");
+        user.setPassword(encoder.encode("plainPassword"));
+        user.setUserRole("USER");
+        userRepository.save(user);
+
+        var admin = new User();
+        admin.setUsername("admin");
+        admin.setPassword(encoder.encode("adminPassword"));
+        admin.setUserRole("ADMIN");
+        userRepository.save(admin);
     }
 
-    @Test @WithMockUser(username="admin", roles={"ADMIN"})
+    @Test
+    @WithMockUser(username="admin", roles={"ADMIN"})
     void adminCanDeleteUser() {
         var u = userRepository.findByUsername("piyush").orElseThrow();
         userService.deleteUserById(u.getUserId());
-        org.assertj.core.api.Assertions.assertThat(userRepository.findById(u.getUserId())).isEmpty();
+        assertThat(userRepository.findById(u.getUserId())).isEmpty();
     }
 
-    @Test @WithMockUser(username="user", roles={"USER"})
+    @Test
+    @WithMockUser(username="user", roles={"USER"})
     void userCannotDeleteUser() {
         var u = userRepository.findByUsername("piyush").orElseThrow();
-        org.junit.jupiter.api.Assertions.assertThrows(org.springframework.security.access.AccessDeniedException.class, () -> userService.deleteUserById(u.getUserId()));
+        assertThrows(AccessDeniedException.class,
+            () -> userService.deleteUserById(u.getUserId()));
     }
 }
