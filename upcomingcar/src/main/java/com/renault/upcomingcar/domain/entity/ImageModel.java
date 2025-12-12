@@ -9,20 +9,21 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "images")
+@Table(name = "images")   // ✅ FIXED
 public class ImageModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "image_id")
     private Long id;
 
-    @Column(nullable = false)
-    private String fileName;
+    @Column(name = "name")
+    private String name;
 
-    @Column(nullable = false)
-    private String fileType;
+    @Column(name = "type")
+    private String type;
 
     @Lob
-    @Column(nullable = false)
-    private byte[] data;
+    @Column(name = "pic_byte")
+    private byte[] picByte;
 }

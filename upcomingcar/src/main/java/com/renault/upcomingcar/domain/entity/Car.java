@@ -1,10 +1,7 @@
 package com.renault.upcomingcar.domain.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Positive;
 import lombok.*;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -12,18 +9,22 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "cars1")
+@Table(name = "cars1")   // ✅ FIXED
 public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "car_id")
+    private Long carId;
 
-    @Column(name = "car_name", nullable = false)
+    @Column(name = "car_name")
     private String carName;
 
     @Column(name = "car_type")
     private String carType;
+
+    @Column(name = "model_no")
+    private String modelNo;
 
     @Column(name = "fuel_type")
     private String fuelType;
@@ -33,8 +34,4 @@ public class Car {
 
     @Column(name = "price")
     private Double price;
-
-    // One car has many images
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CarImage> carImages;
 }

@@ -29,7 +29,7 @@ public class CarController {
 	@PostMapping("/admin")
 	public Car create(@RequestBody @Validated CarDto dto) {
 		Car car = new  Car();
-		car.setId(dto.carId());
+		car.setCarId(dto.carId());
 		car.setCarName(dto.carName());
 		return carService.saveCar(car);
 	}

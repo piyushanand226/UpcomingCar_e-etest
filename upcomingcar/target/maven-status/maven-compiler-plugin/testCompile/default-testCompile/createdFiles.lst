@@ -1,0 +1,5 @@
+com\renault\upcomingcar\unit\JwtUtilTest.class
+com\renault\upcomingcar\service\CarServiceSecurityTest.class
+com\renault\upcomingcar\service\UserServiceSecurityTest.class
+com\renault\upcomingcar\UpcomingcarApplicationTests.class
+com\renault\upcomingcar\integration\JwtAuthenticationIntegrationTest.class
