@@ -1,14 +1,18 @@
 package com.renault.upcomingcar.domain.service;
 
 import com.renault.upcomingcar.domain.entity.Car;
+import org.springframework.security.access.prepost.PreAuthorize;
+
+import java.util.List;
 
 public interface CarService {
-    @org.springframework.security.access.prepost.PreAuthorize("hasAnyRole('USER','ADMIN')")
-    java.util.List<Car> findAllCars();
 
-    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    List<Car> findAllCars();
+
+    @PreAuthorize("hasRole('ADMIN')")
     Car saveCar(Car car);
 
-    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
-    void deleteCarById(Integer id);
+    @PreAuthorize("hasRole('ADMIN')")
+    void deleteCarById(Long id);  // ✅ Changed to Long
 }

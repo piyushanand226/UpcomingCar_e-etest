@@ -1,82 +1,40 @@
 package com.renault.upcomingcar.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.springframework.data.annotation.CreatedDate;
+import jakarta.validation.constraints.Positive;
+import lombok.*;
 
-import java.util.Date;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "cars1")
-@ToString
-@Setter
-@Getter
 public class Car {
 
     @Id
-    @Column(name = "car_Id", nullable = false)
-    private Integer carId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "car_Name")
+    @Column(name = "car_name", nullable = false)
     private String carName;
 
-    @Column(name = "color")
-    private String color;
-
-    @Column(name = "car_Type")
+    @Column(name = "car_type")
     private String carType;
 
-    @Column(name = "model_No")
-    private String modelNo;
+    @Column(name = "fuel_type")
+    private String fuelType;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "start_Manufacture")
-    @CreatedDate
-    private Date startManufacture;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "end_Manufacture")
-    @CreatedDate
-    private Date endManufacture;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "start_Registration")
-    @CreatedDate
-    private Date startRegistration;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "end_Registration")
-    @CreatedDate
-    private Date endRegistration;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "delivery_Date")
-    @CreatedDate
-    private Date deliveryDate;
+    @Column(name = "transmission_type")
+    private String transmissionType;
 
     @Column(name = "price")
-    private Integer price;
+    private Double price;
 
-    @Column(name = "discount_OnRegistration")
-    private Integer discountOnRegistration;
-
-    @Column(name = "offer")
-    private Integer offer;
-
-    @Column(name = "picByte", length = 1000)
-    private byte[] picByte;
-
-    // Relationship with User
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_Id", referencedColumnName = "user_Id")
-    private User user;
-
-    // Relationship with ImageModel
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "image_Id", referencedColumnName = "image_Id")
-    private ImageModel imagemodel;
+    // One car has many images
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CarImage> carImages;
 }

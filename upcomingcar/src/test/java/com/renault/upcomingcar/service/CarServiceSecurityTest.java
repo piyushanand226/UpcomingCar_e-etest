@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-@ActiveProfiles("test")   // ✅ ensures H2 + test profile is used
+@ActiveProfiles("test")
 class CarServiceSecurityTest {
 
     @Autowired
@@ -23,7 +23,7 @@ class CarServiceSecurityTest {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void adminCanSaveCar() {
         Car car = new Car();
-        car.setCarName("Kwid");
+        car.setCarName("Kwid");   // ✅ Correct field name
         assertThat(carService.saveCar(car)).isNotNull();
     }
 
@@ -34,4 +34,5 @@ class CarServiceSecurityTest {
         car.setCarName("Duster");
         assertThrows(AccessDeniedException.class, () -> carService.saveCar(car));
     }
+
 }

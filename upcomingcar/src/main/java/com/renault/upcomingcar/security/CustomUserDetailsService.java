@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
         // Map "ADMIN" -> ROLE_ADMIN, "USER" -> ROLE_USER
-        var authorities = List.of(new SimpleGrantedAuthority("ROLE_" + u.getUserRole()));
+        var authorities = List.of(new SimpleGrantedAuthority("ROLE_" + u.getRole()));
 
         return org.springframework.security.core.userdetails.User
                 .withUsername(u.getUsername())
@@ -37,3 +37,4 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .build();
     }
 }
+//.authorities(authorities)

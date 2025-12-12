@@ -4,6 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 
 public record CarDto(
-    @Positive Integer carId,
+    @Positive Long carId,
     @NotBlank String carName
 ) {}

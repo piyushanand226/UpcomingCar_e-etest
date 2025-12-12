@@ -27,7 +27,7 @@ public class UserController {
         User user = new User();
         user.setUsername(dto.username());
         user.setPassword(dto.password());
-        user.setUserRole(dto.role());
+        user.setRole(dto.role());
         return userService.saveUser(user);
     }
 
@@ -38,6 +38,6 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
-        userService.deleteUserById(id);
+        userService.deleteUserById(id.longValue());
     }
 }

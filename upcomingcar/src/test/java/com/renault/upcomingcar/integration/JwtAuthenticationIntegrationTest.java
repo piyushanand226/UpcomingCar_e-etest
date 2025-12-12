@@ -26,13 +26,13 @@ public class JwtAuthenticationIntegrationTest {
         var user = new User();
         user.setUsername("piyush");
         user.setPassword(encoder.encode("plainPassword"));
-        user.setUserRole("USER");
+        user.setRole("USER");
         repo.save(user);
 
         var admin = new User();
         admin.setUsername("admin");
         admin.setPassword(encoder.encode("adminPassword"));
-        admin.setUserRole("ADMIN");
+        admin.setRole("ADMIN");
         repo.save(admin);
     }
 

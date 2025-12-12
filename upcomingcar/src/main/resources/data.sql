@@ -1,8 +1,5 @@
 -- Clear existing rows (order matters because of foreign keys)
-DELETE FROM cars1;
-DELETE FROM car_images;
-DELETE FROM images;
-DELETE FROM users1;
+
 
 -- Insert sample users
 INSERT INTO users1 (user_Id, name, username, password, user_role) VALUES

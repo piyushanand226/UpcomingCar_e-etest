@@ -30,13 +30,13 @@ class UserServiceSecurityTest {
         var user = new User();
         user.setUsername("piyush");
         user.setPassword(encoder.encode("plainPassword"));
-        user.setUserRole("USER");
+        user.setRole("USER");
         userRepository.save(user);
 
         var admin = new User();
         admin.setUsername("admin");
         admin.setPassword(encoder.encode("adminPassword"));
-        admin.setUserRole("ADMIN");
+        admin.setRole("ADMIN");
         userRepository.save(admin);
     }
 
@@ -44,8 +44,8 @@ class UserServiceSecurityTest {
     @WithMockUser(username="admin", roles={"ADMIN"})
     void adminCanDeleteUser() {
         var u = userRepository.findByUsername("piyush").orElseThrow();
-        userService.deleteUserById(u.getUserId());
-        assertThat(userRepository.findById(u.getUserId())).isEmpty();
+        userService.deleteUserById(u.getId().longValue());
+        assertThat(userRepository.findById(u.getId())).isEmpty();
     }
 
     @Test
@@ -53,6 +53,6 @@ class UserServiceSecurityTest {
     void userCannotDeleteUser() {
         var u = userRepository.findByUsername("piyush").orElseThrow();
         assertThrows(AccessDeniedException.class,
-            () -> userService.deleteUserById(u.getUserId()));
+            () -> userService.deleteUserById(u.getId()));
     }
 }

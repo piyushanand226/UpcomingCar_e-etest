@@ -13,5 +13,9 @@ public interface UserService {
     java.util.Optional<User> findUserById(Integer id);
 
     @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
-    void deleteUserById(Integer id);
+    void deleteUserById(Long long1);
+
+
+
+
 }

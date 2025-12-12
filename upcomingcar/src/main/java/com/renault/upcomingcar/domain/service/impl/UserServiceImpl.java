@@ -35,11 +35,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findUserById(Integer id) {
-        return userRepo.findById(id);
+        return userRepo.findById(id.longValue());
     }
 
-    @Override
-    public void deleteUserById(Integer id) {
-        userRepo.deleteById(id);
-    }
+	@Override
+	public void deleteUserById(Long long1) {
+		userRepo.deleteById(long1);
+		
+	}
+
+   
 }

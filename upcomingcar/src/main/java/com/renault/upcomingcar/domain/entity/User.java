@@ -1,30 +1,28 @@
 package com.renault.upcomingcar.domain.entity;
 
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import java.util.Set;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "users1")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_Id", nullable = false)
-    private Integer userId;
+    private Long id;
 
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(name = "password", nullable = false)
+    @Column(nullable = false)
     private String password;
 
-    @Column(name = "user_role")
-    private String userRole;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Car> cars;
+    // e.g., ROLE_ADMIN, ROLE_USER
+    @Column(nullable = false)
+    private String role;
 }
